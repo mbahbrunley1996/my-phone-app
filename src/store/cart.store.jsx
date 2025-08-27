@@ -1,29 +1,37 @@
 import { create } from "zustand";
 
-export const useStoreCart = create((set) => ({
+export const useStoreCart = create((set, get) => ({
   cartItems: [],
 
-  toggleItem: (event) =>
+  // Add item only if it doesn't exist
+  addToCart: (item) =>
     set((state) => {
-      const existing = state.cartItems.find((item) => item.id === event.id);
-      if (existing) {
-        return {
-          cartItems: state.cartItems.filter((item) => item.id !== event.id),
-        };
-      } else {
-        return {
-          cartItems: [...state.cartItems, { ...event, quantity: 1 }],
-        };
-      }
+      const exists = state.cartItems.find((i) => i.id === item.id);
+      if (exists) return state; // do nothing if already in cart
+      return { cartItems: [...state.cartItems, { ...item, quantity: 1 }] };
     }),
 
-  removeItem: (id) =>
+  // Remove item by id safely
+  removeFromCart: (id) =>
     set((state) => ({
       cartItems: state.cartItems.filter((item) => item.id !== id),
     })),
 
-  clearCart: () => set({ cartItems: [] }),
+  // Toggle add/remove
+  toggleItem: (item) => {
+  if (!item?.id) return; // safety
+  const exists = get().cartItems.find((i) => i.id === item.id);
+  if (exists) {
+    get().removeFromCart(item.id);
+  } else {
+    get().addToCart(item);
+  }
+},
 
+  // Check if in cart
+  isInCart: (id) => get().cartItems.some((item) => item.id === id),
+
+  // Quantity controls
   increaseQty: (id) =>
     set((state) => ({
       cartItems: state.cartItems.map((item) =>
@@ -34,14 +42,15 @@ export const useStoreCart = create((set) => ({
   decreaseQty: (id) =>
     set((state) => ({
       cartItems: state.cartItems.map((item) =>
-        item.id === id && item.quantity > 1
-          ? { ...item, quantity: item.quantity - 1 }
+        item.id === id
+          ? { ...item, quantity: Math.max(item.quantity - 1, 1) }
           : item
       ),
     })),
-}));
-  
 
+  // Clear all
+  clearCart: () => set({ cartItems: [] }),
+}));
 
 
 

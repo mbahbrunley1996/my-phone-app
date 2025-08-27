@@ -4,10 +4,10 @@ import { useStoreCart } from "@/store/cart.store";
 import NavbarComponent from "@/components/Navbar/NavbarComponent";
 
 const CartPage = () => {
-  const { cartItems, removeItem, increaseQty, decreaseQty, clearCart } = useStoreCart();
+  const { cartItems, removeFromCart, increaseQty, decreaseQty, clearCart } = useStoreCart();
 
   const totalPrice = cartItems.reduce(
-    (total, item) => total + item.price * item.quantity,
+    (total, item) => total + (item.price || 0) * (item.quantity || 1),
     0
   );
 
@@ -27,27 +27,28 @@ const CartPage = () => {
                   key={item.id}
                   className="flex items-center justify-between bg-white shadow-md p-4 rounded-xl"
                 >
+                  {/* Product Info */}
                   <div className="flex items-center gap-4">
                     <img
-                      src={item.image}
-                      alt={item.title}
+                      src={item.image || "/placeholder.png"}
+                      alt={item.title || "Product"}
                       className="w-20 h-20 object-cover rounded-lg"
                     />
                     <div>
-                      <h2 className="font-bold text-lg">{item.title}</h2>
-                      <p className="text-gray-500">${item.price}</p>
+                      <h2 className="font-bold text-lg">{item.title || "Unnamed Product"}</h2>
+                      <p className="text-gray-500">${(item.price || 0).toFixed(2)}</p>
                     </div>
                   </div>
 
                   {/* Quantity controls */}
                   <div className="flex items-center gap-3">
                     <button
-                      onClick={() => decreaseQty(item.id)}
+                      onClick={() => item.quantity > 1 && decreaseQty(item.id)}
                       className="px-3 py-1 bg-gray-200 rounded"
                     >
                       -
                     </button>
-                    <span>{item.quantity}</span>
+                    <span>{item.quantity || 1}</span>
                     <button
                       onClick={() => increaseQty(item.id)}
                       className="px-3 py-1 bg-gray-200 rounded"
@@ -59,12 +60,13 @@ const CartPage = () => {
                   {/* Subtotal + remove */}
                   <div className="flex items-center gap-5">
                     <span className="font-bold text-green-600">
-                      ${item.price * item.quantity}
+                      ${((item.price || 0) * (item.quantity || 1)).toFixed(2)}
                     </span>
                     <button
-                      onClick={() => removeItem(item.id)}
+                      onClick={() => removeFromCart(item.id)}
                       className="text-red-500 font-semibold"
                     >
+
                       Remove
                     </button>
                   </div>
@@ -76,7 +78,7 @@ const CartPage = () => {
             <div className="mt-10 p-5 bg-gray-100 rounded-xl flex flex-col gap-3">
               <div className="flex justify-between font-bold text-lg">
                 <span>Total</span>
-                <span>${totalPrice}</span>
+                <span>${totalPrice.toFixed(2)}</span>
               </div>
               <button
                 onClick={clearCart}
@@ -96,7 +98,6 @@ const CartPage = () => {
 };
 
 export default CartPage;
-
 
 
 

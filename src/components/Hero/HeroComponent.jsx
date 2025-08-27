@@ -9,15 +9,20 @@ import { AlignLeft } from 'lucide-react';
 import React from 'react'
 import Link from 'next/link';
 import { trips } from '../../app/data';
-
+import { ShoppingCart } from 'lucide-react';
+import { useStoreCart } from '@/store/cart.store';  
 
 const HeroComponent = () => {
+
+ 
+   const { cartItems, toggleItem, isInCart } = useStoreCart();
+
   return (
     <>
     <div className='md:py-8 py-20'>
 
 
-    <div className="w-[80%] mx-auto bg-[#212844] md:flex flex-wrap justify-between items-center p-12  rounded-2xl text-white">
+     <div className="w-[80%] mx-auto bg-[#212844] md:flex flex-wrap justify-between items-center p-12  rounded-2xl text-white">
 
        <div className="">
       <button className='border rounded-full p-8 bg-white flex relative md:right-0 md:left-[-90px] left-20 md:bottom-0 bottom-23 shadow'> <ChevronLeft color='#008ECC'/></button>
@@ -53,37 +58,98 @@ const HeroComponent = () => {
        <div>
       <button className='border rounded-full p-8 bg-white flex relative left-22 top-23 md:top-0 shadow'> <ChevronRight color='#008ECC'/></button>
     </div>
+    </div> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      <div className="py-20 space-y-5 w-[100%] md:w-[80%] flex flex-col md:justify-center justify-start ml-0 md:ml-[10%]">
+      {/* Section Title */}
+      <div className="border-b border-gray-300 pb-4">
+        <p className="underline underline-offset-20 text-2xl text-gray-500 font-bold decoration-[#008ECC] decoration-4">
+          Grab the best deal on{" "}
+          <a className="text-[#008ECC]" href="#">
+            trips
+          </a>
+        </p>
+      </div>
+
+      {/* Grid of Cards */}
+      <div className="grid grid-cols-2 md:grid-cols-5 md:w-full w-[92%] md:justify-center md:items-center gap-2 md:gap-3 py-4">
+        {trips.map((phone) => (
+          <Link 
+          href={`/trips/${phone.slug}`} 
+            key={phone.id}
+            className="border border-gray-100 w-[100%] md:w-[280px] rounded-2xl bg-white group overflow-hidden transform transition-transform duration-500 hover:scale-105 hover:shadow-xl"
+          >
+            {/* Image with hover overlay */}
+            <div className="relative flex md:flex-col items-center justify-center gap-4 p-4 bg-[#F5F5F5] h-[220px] rounded-xl overflow-hidden">
+              <img
+                src={phone.img}
+                alt={phone.name}
+                className="w-full h-full object-contain transform transition-transform duration-700 group-hover:scale-110"
+              />
+
+              {/* Overlay */}
+              <div className="absolute inset-0 flex items-center justify-center gap-4 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                {/* Heart */}
+                <button
+                  className="bg-white p-2 rounded-full shadow hover:bg-red-100 transition w-10"
+                  onClick={() => console.log("Wishlist:", phone.name)}
+                >
+                  ❤️
+                </button>
+
+                {/* Cart Toggle */}
+                <button
+                  className={`bg-white p-2 rounded-full shadow transition ${
+                    isInCart(phone.id) ? "bg-green-200" : "hover:bg-green-100"
+                  }`}
+                  onClick={() => toggleItem(phone)}
+                >
+                  <ShoppingCart size={24} color="#008ECC" />
+                </button>
+              </div>
+            </div>
+
+            {/* Card Info */}
+            <div className="space-y-2 p-2 text-medium">
+              <p className="font-semibold">{phone.name}</p>
+              <div className="flex gap-4">
+                <p className="font-bold">${phone.price}</p>
+                <p className="line-through">${phone.oldPrice}</p>
+              </div>
+              <div className="border-t pt-2 border-gray-300 flex justify-between items-center">
+                <button className="text-[#249B3E] font-semibold">
+                  Save - ${phone.saveAmount}
+                </button>
+              </div>
+            </div>
+          </Link>
+        ))}
+      </div>
     </div>
 
 
 
-     <div className='py-20 space-y-5 w-[100%] md:w-[80%] flex flex-col md:justify-center justify-start ml-0 md:ml-[10%] ml-[5%]'>
-      <div className='border-b border-gray-300 pb-4'>
-        <p className='underline underline-offset-20 text-2xl text-gray-500 font-bold decoration-[#008ECC] decoration-4'>Grap the best deal on{" "} <a className='text-[#008ECC]' href="#">trips</a> </p>
-      </div> 
-     <div className="grid grid-cols-2 md:grid-cols-5 md:w-full w-[92%] md:justify-center md:items-center gap-2 md:gap-3 py-4">
-          {trips.map((phone) => (
-            <div
-         key={phone.id}
-         className='border border-gray-100 w-[100%] md:w-[280px] rounded-2xl'>
 
-       <div className='flex md:flex-col items-center md:items-center gap-4 p-4 bg-[#F5F5F5] h-[220px] rounded-xl'>
-          <img src= {phone.img} alt={phone.name}/>
-       </div>
-       <div className='space-y-2 p-2 text-medium'>
-         <p className='font-semibold'>{phone.name}</p>
-         <div className='flex gap-4'>
-           <p className='font-bold'>${phone.price}</p>
-           <p className='line-through'>${phone.oldPrice}</p>
-         </div>
-         <div className='border-t pt-2 border-gray-300 flex justify-between items-center'>
-          <button className='text-[#249B3E] font-semibold'>Save - ${phone.saveAmount}</button>
-         </div>
-       </div>
-       </div>
-          ))}
-       </div>
-    </div>
+
+
+
+
+
+
 
 
      <div className='md:py-20 space-y-5 w-[100%] md:w-[80%] flex flex-col justify-center ml-0 md:ml-[10%] ml-[5%]'>
@@ -95,7 +161,7 @@ const HeroComponent = () => {
           <div className='grid grid-cols-2 md:grid-cols-7 gap-5 py-4 justify-between items-center'>
            
          <div className=''>
-            <div className='flex gap-4 items-center'>
+            <div className='flex gap-4 items-center hover:scale-105 transition in-out-easy duration-300'>
               <button className='p-4 w-[110px] rounded-full bg-[#F3F9FB] shadow-lg flex justify-center border border-sky-300'> 
                  <img className='w-[40px]' src="/image 3.png" alt="logo" />
               </button>
@@ -109,7 +175,7 @@ const HeroComponent = () => {
      
 
      <div className=''>
-            <div className='flex gap-4 items-center'>
+            <div className='flex gap-4 items-center hover:scale-105 transition in-out-easy duration-300'>
               <button className='p-4 w-[110px] rounded-full bg-[#F3F9FB] shadow-lg flex justify-center'> 
                  <img className='w-[40px]' src="/image 3 (4).png" alt="logo" />
               </button>
@@ -121,7 +187,7 @@ const HeroComponent = () => {
          </div>
         </div> 
      <div className=''>
-            <div className='flex gap-4 items-center'>
+            <div className='flex gap-4 items-center hover:scale-105 transition in-out-easy duration-300'>
               <button className='p-4 w-[110px] rounded-full bg-[#F3F9FB] shadow-lg flex justify-center'> 
                  <img className='w-[80px]' src="/Ellipse 41.png" alt="logo" />
               </button>
@@ -133,7 +199,7 @@ const HeroComponent = () => {
          </div>
          </div>
      <div className=''>
-            <div className='flex gap-4 items-center'>
+            <div className='flex gap-4 items-center hover:scale-105 transition in-out-easy duration-300'>
               <button className='p-4 w-[110px] rounded-full bg-[#F3F9FB] shadow-lg flex justify-center'> 
                  <img className='w-[80px]' src="/image 4.png" alt="logo" />
               </button>
@@ -145,7 +211,7 @@ const HeroComponent = () => {
          </div>
          </div>
      <div className=''>
-            <div className='flex gap-4 items-center'>
+            <div className='flex gap-4 items-center hover:scale-105 transition in-out-easy duration-300'>
               <button className='p-4 w-[110px] rounded-full bg-[#F3F9FB] shadow-lg flex justify-center'> 
                  <img className='w-[80px]' src="/image 2.png" alt="logo" />
               </button>
@@ -157,7 +223,7 @@ const HeroComponent = () => {
          </div>
          </div> 
        <div className=''>
-            <div className='flex gap-4 items-center'>
+            <div className='flex gap-4 items-center hover:scale-105 transition in-out-easy duration-300'>
               <button className='p-4 w-[110px] rounded-full bg-[#F3F9FB] shadow-lg flex justify-center'> 
                  <img className='w-[80px]' src="/image 6.png" alt="logo" />
               </button>
@@ -170,7 +236,7 @@ const HeroComponent = () => {
          </div>
 
           <div className=''>
-            <div className='flex gap-4 items-center'>
+            <div className='flex gap-4 items-center hover:scale-105 transition in-out-easy duration-300'>
               <button className='p-4 w-[110px] rounded-full bg-[#F3F9FB] shadow-lg flex justify-center'> 
                  <img className='w-[80px]' src="/image 7.png" alt="logo" />
               </button>

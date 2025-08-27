@@ -46,7 +46,7 @@ const NavbarComponent = () => {
 
           {/* Cart with hover dropdown */}
           <div 
-            className="relative cursor-pointer"
+            className="relative cursor-pointer flex gap-4"
             onMouseEnter={() => setHoverCart(true)}
             onMouseLeave={() => setHoverCart(false)}
           >
