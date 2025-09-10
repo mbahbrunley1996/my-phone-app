@@ -11,6 +11,31 @@ import {
   AlignLeft 
 } from 'lucide-react';
 import { useStoreCart } from '@/store/cart.store';
+import { Button } from "@/components/ui/button"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { Menu } from 'lucide-react';
+import { ModeToggle } from '../ModeToggle/ModeToggle';
+import {
+  SignInButton,
+  SignUpButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+} from '@clerk/nextjs'
+
 
 const NavbarComponent = () => {
   const { cartItems } = useStoreCart(); 
@@ -21,17 +46,25 @@ const NavbarComponent = () => {
       {/* ... your topbar code ... */}
 
       {/* Main Navbar */}
-      <div className="grid grid-rows-2 md:flex items-center p-4 bg-white shadow fixed w-full z-10">
-        <div className="flex gap-2 justify-center items-center w-[50%]">
+      <div className="grid grid-rows-2 md:flex items-center p-4 bg-primary shadow fixed w-full z-33">
+        <div className="flex justify-center items-center gap-4 w-[60%] ml-15">
+          <div className='flex gap-2'>
           <button className="rounded-xl bg-[#F3F9FB] p-3">
             <AlignLeft color="#008ECC" size={30}/>
           </button>
-          <h1 className="flex text-3xl font-bold text-[#008ECC]">MegaMart</h1>
+          </div>
+          <div>
+          <h1 className="flex text-3xl items-center font-bold text-[#008ECC]">MegaMart</h1>
+          </div>
+          <div className='flex gap-2 justify-between w-[200px] items-center ml-10 cursor-pointer font-bold text-gray-500 list-none'>
+            <li><Link href="/">Home</Link></li>
+            <li><Link href="/contact">Contact Page</Link></li>
+          </div>
         </div>
 
         <div className="flex items-center gap-8 w-full justify-center">
           {/* Search */}
-          <div>
+          <div className=''>
             <button className="flex items-center gap-3 md:gap-12 md:p-4 rounded-2xl bg-[#F3F9FB] text-[10px] md:text-lg">
               <Search color="#008ECC"/> Search essentials, groceries and more...  
               <AlignJustify color="#008ECC" />
@@ -79,6 +112,68 @@ const NavbarComponent = () => {
               </div>
             )}
           </div>
+          <div>
+             <DropdownMenu>
+      <DropdownMenuTrigger className="text-black" asChild>
+        <Menu color="#000000" />
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="w-56" align="start">
+        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+        <DropdownMenuGroup>
+          <DropdownMenuItem>
+            Profile
+            <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            Billing
+            <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            Settings
+            <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            Keyboard shortcuts
+            <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
+        <DropdownMenuSeparator />
+        <DropdownMenuGroup>
+          <DropdownMenuItem>Team</DropdownMenuItem>
+          <DropdownMenuSub>
+            <DropdownMenuSubTrigger>Invite users</DropdownMenuSubTrigger>
+            <DropdownMenuPortal>
+              <DropdownMenuSubContent>
+                <DropdownMenuItem>Email</DropdownMenuItem>
+                <DropdownMenuItem>Message</DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>More...</DropdownMenuItem>
+              </DropdownMenuSubContent>
+            </DropdownMenuPortal>
+          </DropdownMenuSub>
+          <DropdownMenuItem>
+            New Team
+            <DropdownMenuShortcut>⌘+T</DropdownMenuShortcut>
+          </DropdownMenuItem>
+             {/* {SignIn Button} */}
+          <SignedOut> <SignInButton  /> </SignedOut>
+        </DropdownMenuGroup>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem>GitHub</DropdownMenuItem>
+        <DropdownMenuItem>Support</DropdownMenuItem>
+        <DropdownMenuItem disabled>API</DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem>
+          Log out
+          <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+          </div>
+          <div className='text-black border rounded-md border-gray-300 shadow'>
+            <ModeToggle />
+          </div>
+          <UserButton />
         </div>
       </div>
     </>

@@ -11,18 +11,25 @@ import Link from 'next/link';
 import { trips } from '../../app/data';
 import { ShoppingCart } from 'lucide-react';
 import { useStoreCart } from '@/store/cart.store';  
+import { useState } from 'react';
+import HeroScroller from '../HeroScroller/HeroScroller';
+
 
 const HeroComponent = () => {
 
  
    const { cartItems, toggleItem, isInCart } = useStoreCart();
+   const [isClicked, setIsClicked] = useState(false);
+   const [searchTerm, setSearchTerm] = useState('');
+   const filteredTrips = searchTerm.length > 0 ? trips.filter(trips=> trips.name.toLowerCase().includes(searchTerm.toLowerCase())) : trips;
 
   return (
     <>
-    <div className='md:py-8 py-20'>
+    <HeroScroller />
+    <div className='md:py-5 py-5'>
 
 
-     <div className="w-[80%] mx-auto bg-[#212844] md:flex flex-wrap justify-between items-center p-12  rounded-2xl text-white">
+     {/* <div className="w-[80%] mx-auto bg-[#212844] md:flex flex-wrap justify-between items-center p-12  rounded-2xl text-white">
 
        <div className="">
       <button className='border rounded-full p-8 bg-white flex relative md:right-0 md:left-[-90px] left-20 md:bottom-0 bottom-23 shadow'> <ChevronLeft color='#008ECC'/></button>
@@ -58,7 +65,7 @@ const HeroComponent = () => {
        <div>
       <button className='border rounded-full p-8 bg-white flex relative left-22 top-23 md:top-0 shadow'> <ChevronRight color='#008ECC'/></button>
     </div>
-    </div> 
+    </div>  */}
 
 
 
@@ -77,21 +84,33 @@ const HeroComponent = () => {
       <div className="py-20 space-y-5 w-[100%] md:w-[80%] flex flex-col md:justify-center justify-start ml-0 md:ml-[10%]">
       {/* Section Title */}
       <div className="border-b border-gray-300 pb-4">
-        <p className="underline underline-offset-20 text-2xl text-gray-500 font-bold decoration-[#008ECC] decoration-4">
+        <p className="underline underline-offset-20 text-2xl text-gray-500 font-bold decoration-primary decoration-4">
           Grab the best deal on{" "}
-          <a className="text-[#008ECC]" href="#">
+          <a className="text-primary" href="#">
             trips
           </a>
         </p>
       </div>
 
+        <div className="flex justify-center items-center py-10 relative">
+          <input className='border px-4 py-3 rounded-2xl w-[440px] h-full' 
+          type="text" 
+          placeholder="search..."
+          onChange={(e) => setSearchTerm(e.target.value)}
+          />
+          <button onClick={() => setIsClicked(!isClicked)} className='bg-primary text-white rounded-full p-2 px-4 absolute ml-95 flex gap-2 items-center'> <Search color="#000000" /></button>
+        </div>
+        {/* <div>
+          <h1 onChange={(e) => setSearchTerm()}>{searchTerm}</h1>
+        </div> */}
+
       {/* Grid of Cards */}
       <div className="grid grid-cols-2 md:grid-cols-5 md:w-full w-[92%] md:justify-center md:items-center gap-2 md:gap-3 py-4">
-        {trips.map((phone) => (
+        {filteredTrips.map((phone) => (
           <Link 
           href={`/trips/${phone.slug}`} 
             key={phone.id}
-            className="border border-gray-100 w-[100%] md:w-[280px] rounded-2xl bg-white group overflow-hidden transform transition-transform duration-500 hover:scale-105 hover:shadow-xl"
+            className="border border-gray-100 w-[100%] md:w-[280px] rounded-2xl group overflow-hidden transform transition-transform duration-500 hover:scale-105 hover:shadow-xl"
           >
             {/* Image with hover overlay */}
             <div className="relative flex md:flex-col items-center justify-center gap-4 p-4 bg-[#F5F5F5] h-[220px] rounded-xl overflow-hidden">
@@ -105,7 +124,7 @@ const HeroComponent = () => {
               <div className="absolute inset-0 flex items-center justify-center gap-4 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
                 {/* Heart */}
                 <button
-                  className="bg-white p-2 rounded-full shadow hover:bg-red-100 transition w-10"
+                  className="bg-primary p-2 rounded-full shadow hover:bg-primary transition w-10"
                   onClick={() => console.log("Wishlist:", phone.name)}
                 >
                   ❤️
@@ -131,7 +150,7 @@ const HeroComponent = () => {
                 <p className="line-through">${phone.oldPrice}</p>
               </div>
               <div className="border-t pt-2 border-gray-300 flex justify-between items-center">
-                <button className="text-[#249B3E] font-semibold">
+                <button className="text-primary font-semibold">
                   Save - ${phone.saveAmount}
                 </button>
               </div>
@@ -154,7 +173,7 @@ const HeroComponent = () => {
 
      <div className='md:py-20 space-y-5 w-[100%] md:w-[80%] flex flex-col justify-center ml-0 md:ml-[10%] ml-[5%]'>
          <div className='border-b border-gray-300 pb-4 flex justify-between'>
-        <p className='underline underline-offset-20 text-2xl text-gray-500 font-bold decoration-[#008ECC] decoration-4'>Shop From<a className='text-[#008ECC]' href="#">Top Categories</a> </p>
+        <p className='underline underline-offset-20 text-2xl text-gray-500 font-bold decoration-primary decoration-4'>Shop From<a className='text-primary' href="#">Top Categories</a> </p>
         <p className="flex md:visible hidden">View All <ChevronRight color='#008ECC'/></p>
       </div> 
 
@@ -258,7 +277,7 @@ const HeroComponent = () => {
 
          <div className='py-20 space-y-5 w-[80%] flex flex-col justify-center md:ml-[10%] ml-[5%]'>
          <div className=' border-b border-gray-300 pb-4 flex justify-between'>
-        <p className='underline underline-offset-20 text-2xl text-gray-500 font-bold decoration-[#008ECC] decoration-4'>Shop From<a className='text-[#008ECC]' href="#">Top Categories</a> </p>
+        <p className='underline underline-offset-20 text-2xl text-gray-500 font-bold decoration-primary decoration-4'>Shop From<a className='text-primary' href="#">Top Categories</a> </p>
         <p className="flex md:visible hidden">View All <ChevronRight color='#008ECC'/></p>
         </div> 
 
@@ -319,7 +338,7 @@ const HeroComponent = () => {
       </div>
 
          <div className='flex gap-2 items-center justify-center mt-10'>
-            <button className=' p-1 px-4 rounded-full bg-[#008ECC]'></button>
+            <button className=' p-1 px-4 rounded-full bg-primary'></button>
             <button className=' p-1 rounded-full bg-gray-300'></button>
             <button className=' p-1 rounded-full bg-gray-300'></button>
             <button className=' p-1 rounded-full bg-gray-300'></button>
@@ -337,7 +356,7 @@ const HeroComponent = () => {
 
        <div className='py-20 space-y-5 w-[80%] flex flex-col justify-center md:ml-[10%] ml-[5%]'>
          <div className='border-b border-gray-300 pb-4 flex justify-between'>
-        <p className='underline underline-offset-20 text-2xl text-gray-500 font-bold decoration-[#008ECC] decoration-4'>Shop From<a className='text-[#008ECC]' href="#">Top Categories</a> </p>
+        <p className='underline underline-offset-20 text-2xl text-gray-500 font-bold decoration-primary decoration-4'>Shop From<a className='text-primary' href="#">Top Categories</a> </p>
         <p className='flex md:visible hidden'>View All <ChevronRight color='#008ECC'/></p>
       </div> 
 
