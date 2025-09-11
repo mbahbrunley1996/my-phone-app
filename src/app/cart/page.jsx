@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
-import { useStoreCart } from "@/store/cart.store";
-import NavbarComponent from "@/components/Navbar/NavbarComponent";
+import { useStoreCart } from '../../store/cart.store'; // relative path to store
+import NavbarComponent from '../../components/Navbar/NavbarComponent';
 
 const CartPage = () => {
   const { cartItems, removeFromCart, increaseQty, decreaseQty, clearCart } = useStoreCart();

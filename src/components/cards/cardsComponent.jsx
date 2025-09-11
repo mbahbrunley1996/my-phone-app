@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { trips } from "../../data/smartphonesData";
-import { useStoreCart } from "@/store/cart.store";
+import { useStoreCart } from '../../store/cart.store';
 import { ShoppingCart, Heart } from "lucide-react";
 
 const CardsComponent = () => {

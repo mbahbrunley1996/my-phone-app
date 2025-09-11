@@ -2,13 +2,13 @@
 // import React from 'react';
 // import Page from '../page';
 import Image from 'next/image';
-import NavbarComponent from '@/components/Navbar/NavbarComponent';
+import NavbarComponent from '../../components/Navbar/NavbarComponent';
 import { Send } from 'lucide-react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import React, { useRef, useState } from 'react';
 import emailjs from '@emailjs/browser';
-import { Button } from '@/components/ui/button';
+import { Button } from '../../components/ui/button';
 import { Loader2Icon } from 'lucide-react';
 
 

@@ -41,7 +41,7 @@
 // export default HeroScroller;
 "use client";
 import React from "react";
-import { ContainerScroll } from "@/components/ui/container-scroll-animation";
+import { ContainerScroll } from '../../components/ui/container-scroll-animation';
 import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 

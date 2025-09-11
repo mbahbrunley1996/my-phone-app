@@ -10,8 +10,8 @@ import {
   Search, 
   AlignLeft 
 } from 'lucide-react';
-import { useStoreCart } from '@/store/cart.store';
-import { Button } from "@/components/ui/button"
+import { useStoreCart } from '../../store/cart.store';
+import Button from '../../components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -25,7 +25,7 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "../../components/ui/dropdown-menu";
 import { Menu } from 'lucide-react';
 import { ModeToggle } from '../ModeToggle/ModeToggle';
 import {

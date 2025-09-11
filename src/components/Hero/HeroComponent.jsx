@@ -10,7 +10,7 @@ import React from 'react'
 import Link from 'next/link';
 import { trips } from '../../app/data';
 import { ShoppingCart } from 'lucide-react';
-import { useStoreCart } from '@/store/cart.store';  
+import { useStoreCart } from '../../store/cart.store';  
 import { useState } from 'react';
 import HeroScroller from '../HeroScroller/HeroScroller';
 
