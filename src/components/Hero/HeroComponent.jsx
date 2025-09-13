@@ -120,9 +120,9 @@ const HeroComponent = () => {
                 className="w-full h-full object-contain transform transition-transform duration-700 group-hover:scale-110"
               />
 
-              {/* Overlay */}
+             
               <div className="absolute inset-0 flex items-center justify-center gap-4 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                {/* Heart */}
+              
                 <button
                   className="bg-primary p-2 rounded-full shadow hover:bg-primary transition w-10"
                   onClick={() => console.log("Wishlist:", phone.name)}
@@ -130,7 +130,7 @@ const HeroComponent = () => {
                   ❤️
                 </button>
 
-                {/* Cart Toggle */}
+            
                 <button
                   className={`bg-white p-2 rounded-full shadow transition ${
                     isInCart(phone.id) ? "bg-green-200" : "hover:bg-green-100"
