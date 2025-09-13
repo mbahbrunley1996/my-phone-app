@@ -1,7 +1,9 @@
 "use client";
+export const dynamic = "force-dynamic";
+
 import React from "react";
-import { useStoreCart } from '../../store/cart.store'; // relative path to store
-import NavbarComponent from '../../components/Navbar/NavbarComponent';
+import { useStoreCart } from "@/store/cart.store";
+import NavbarComponent from "@/components/Navbar/NavbarComponent";
 
 const CartPage = () => {
   const { cartItems, removeFromCart, increaseQty, decreaseQty, clearCart } = useStoreCart();
@@ -27,7 +29,6 @@ const CartPage = () => {
                   key={item.id}
                   className="flex items-center justify-between bg-white shadow-md p-4 rounded-xl"
                 >
-                  {/* Product Info */}
                   <div className="flex items-center gap-4">
                     <img
                       src={item.image || "/placeholder.png"}
@@ -40,24 +41,22 @@ const CartPage = () => {
                     </div>
                   </div>
 
-                  {/* Quantity controls */}
                   <div className="flex items-center gap-3">
                     <button
                       onClick={() => item.quantity > 1 && decreaseQty(item.id)}
-                      className="px-3 py-1 bg-gray-200 rounded"
+                      className="px-3 py-1 bg-gray-600 rounded"
                     >
                       -
                     </button>
-                    <span>{item.quantity || 1}</span>
+                    <span className="text-black">{item.quantity || 1}</span>
                     <button
                       onClick={() => increaseQty(item.id)}
-                      className="px-3 py-1 bg-gray-200 rounded"
+                      className="px-3 py-1 bg-red-600 rounded"
                     >
                       +
                     </button>
                   </div>
 
-                  {/* Subtotal + remove */}
                   <div className="flex items-center gap-5">
                     <span className="font-bold text-green-600">
                       ${((item.price || 0) * (item.quantity || 1)).toFixed(2)}
@@ -66,7 +65,6 @@ const CartPage = () => {
                       onClick={() => removeFromCart(item.id)}
                       className="text-red-500 font-semibold"
                     >
-
                       Remove
                     </button>
                   </div>
@@ -74,7 +72,6 @@ const CartPage = () => {
               ))}
             </div>
 
-            {/* Summary */}
             <div className="mt-10 p-5 bg-gray-100 rounded-xl flex flex-col gap-3">
               <div className="flex justify-between font-bold text-lg">
                 <span>Total</span>
@@ -98,6 +95,7 @@ const CartPage = () => {
 };
 
 export default CartPage;
+
 
 
 

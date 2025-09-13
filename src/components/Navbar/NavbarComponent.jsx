@@ -1,4 +1,8 @@
+
 'use client';
+
+export const dynamic = "force-dynamic";
+
 
 import React, { useState } from 'react';
 import Link from 'next/link';
@@ -11,7 +15,8 @@ import {
   AlignLeft 
 } from 'lucide-react';
 import { useStoreCart } from '../../store/cart.store';
-import Button from '../ui/button';
+import { Button } from '@/components/ui/button'; // ✅ matches your export
+
 
 import {
   DropdownMenu,

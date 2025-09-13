@@ -1,5 +1,7 @@
 'use client'
 // import React from 'react';
+export const dynamic = "force-dynamic";
+
 // import Page from '../page';
 import Image from 'next/image';
 import NavbarComponent from '../../components/Navbar/NavbarComponent';

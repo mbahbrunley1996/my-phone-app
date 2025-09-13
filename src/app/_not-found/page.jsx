@@ -1,16 +1,19 @@
+"use client";
+export const dynamic = "force-dynamic";
 
-// ✅ This tells Next.js not to prerender this page at build time
-export const dynamic = 'force-dynamic';
+import React from "react";
+import NavbarComponent from "@/components/Navbar/NavbarComponent";
 
 export default function NotFoundPage() {
   return (
-    <div style={{ textAlign: 'center', padding: '3rem' }}>
-      <h1 style={{ fontSize: '2rem', fontWeight: 'bold' }}>
-        404 – Page Not Found
-      </h1>
-      <p style={{ marginTop: '1rem' }}>
-        Sorry, the page you’re looking for doesn’t exist.
-      </p>
-    </div>
+    <>
+      <NavbarComponent />
+      <div className="flex flex-col items-center justify-center min-h-screen text-center">
+        <h1 className="text-4xl font-bold mb-4">404 – Page Not Found</h1>
+        <p className="text-gray-500 mb-6">Sorry, the page you are looking for does not exist.</p>
+        <a href="/" className="text-blue-500 font-semibold">Go back home</a>
+      </div>
+    </>
   );
 }
+
