@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { useParams } from 'next/navigation';
-import trips from '../data';
+import trips from '../../data';
 
 const TripPage = () => {
   const params = useParams();
