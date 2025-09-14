@@ -133,7 +133,7 @@ const HeroComponent = () => {
             
                 <button
                   className={`bg-white p-2 rounded-full shadow transition ${
-                    isInCart(phone.id) ? "bg-green-200" : "hover:bg-green-100"
+                    isInCart(phone.id) ? "bg-green-100" : "hover:bg-green-50"
                   }`}
                   onClick={() => toggleItem(phone)}
                 >
