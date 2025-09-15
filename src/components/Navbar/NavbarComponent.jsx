@@ -1,8 +1,6 @@
-
 'use client';
 
 export const dynamic = "force-dynamic";
-
 
 import React, { useState } from 'react';
 import Link from 'next/link';
@@ -12,11 +10,12 @@ import {
   User, 
   AlignJustify, 
   Search, 
-  AlignLeft 
+  AlignLeft,
+  Menu,
+  XIcon // 
 } from 'lucide-react';
 import { useStoreCart } from '../../store/cart.store';
-import { Button } from '@/components/ui/button'; // ✅ matches your export
-
+import { Button } from '@/components/ui/button';
 
 import {
   DropdownMenu,
@@ -32,7 +31,6 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { Menu } from 'lucide-react';
 import { ModeToggle } from '../ModeToggle/ModeToggle';
 import {
   SignInButton,
@@ -40,43 +38,57 @@ import {
   SignedIn,
   SignedOut,
   UserButton,
-} from '@clerk/nextjs'
+} from '@clerk/nextjs';
 
 
 const NavbarComponent = () => {
   const { cartItems } = useStoreCart(); 
   const [hoverCart, setHoverCart] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
     <>
-      {/* ... your topbar code ... */}
+  
 
       {/* Main Navbar */}
-      <div className="grid grid-rows-2 md:flex items-center p-4 bg-primary shadow fixed w-full z-33">
+      <div className="grid grid-rows-2 md:flex items-center p-4 bg-blue-600 shadow fixed w-full z-33">
         <div className="flex justify-center items-center gap-4 w-[60%] ml-15">
           <div className='flex gap-2'>
-          <button className="rounded-xl bg-[#F3F9FB] p-3">
-            <AlignLeft color="#008ECC" size={30}/>
-          </button>
+
+          {/* <button 
+          className="rounded-xl bg-[#F3F9FB] p-3 md:hidden"
+          onCLick={()=>setMobileOpen(!mobileOpen)}>
+          {mobileOpen ? <X color="#008ECC" size={28} /> :  <Menu color="#008ECC" size={28} />}
+          </button> */}
+          {/* <button
+              className="md:hidden p-2 bg-[#F3F9FB] rounded"
+              onClick={() => setMobileOpen(!mobileOpen)}
+            >
+              {mobileOpen ? <XIcon color="#008ECC" size={28} /> : <Menu color="#008ECC" size={28} />}
+              
+            </button> */}
           </div>
-          <div>
-          <h1 className="flex text-3xl items-center font-bold text-[#008ECC]">MegaMart</h1>
+          <div className="">
+          <h1 className="flex text-5xl items-center font-bold text-[#008ECC]">MegaMart</h1>
           </div>
-          <div className='flex gap-2 justify-between w-[200px] items-center ml-10 cursor-pointer font-bold text-gray-500 list-none'>
-            <li><Link href="/">Home</Link></li>
-            <li><Link href="/contact">Contact Page</Link></li>
+          <div className='flex ml-15 md:flex gap-6 font-semibold text-white list-none'>
+            <li><Link href="/"  className="hover:text-[#008ECC] underline">Home</Link></li>
+            <li><Link href="/contact"  className="hover:text-[#008ECC]">Contact Page</Link></li>
           </div>
         </div>
 
         <div className="flex items-center gap-8 w-full justify-center">
           {/* Search */}
-          <div className=''>
-            <button className="flex items-center gap-3 md:gap-12 md:p-4 rounded-2xl bg-[#F3F9FB] text-[10px] md:text-lg">
-              <Search color="#008ECC"/> Search essentials, groceries and more...  
+          <div className='flex items-center'>
+            <input className="flex items-center gap-3 md:gap-12 md:p-2 rounded-3xl w-[400px] bg-[#F3F9FB] text-black text-[5px] md:text-sm"
+            placeholder="Search essentials, groceries and more..."
+            /><Search className="relative bottom-0 right-7" color="#008ECC"/>
+              {/* <ul className="border">
+             <Search className="relative top-20" color="#008ECC"/> Search essentials, groceries and more...  
               <AlignJustify color="#008ECC" />
-            </button>
+               </ul> */}
           </div>
-
+           
           {/* User */}
           <div className="flex gap-4 border-r border-gray-300 px-8">
             <User />
